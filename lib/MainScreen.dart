@@ -1,5 +1,6 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:lostfound/LostForm.dart';
 
 class MainScreen extends StatelessWidget {
   @override
@@ -15,10 +16,10 @@ class MainScreen extends StatelessWidget {
                 color: Colors.black12,
                 child: Text(
                   "Lost & Found",
-                  style: GoogleFonts.monoton(
+                  style: GoogleFonts.poppins(
                     fontSize: 45,
                     color: Colors.white,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.bold,
                   )
                 ),
               ),
@@ -31,7 +32,7 @@ class MainScreen extends StatelessWidget {
               ),
               child: RawMaterialButton(
                 onPressed: (){
-//                  Navigator.push(context, MaterialPageRoute(builder: (context)=>MainScreen()));
+                 Navigator.push(context, MaterialPageRoute(builder: (context)=>LostForm()));
                 },
                 elevation: 6,
                 child: Padding(
