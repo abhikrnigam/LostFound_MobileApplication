@@ -26,7 +26,7 @@ class _LostFormState extends State<LostForm> {
   String name;
 
   String item;
-
+  String location;
   String description;
 
   TextEditingController controller1=new TextEditingController();
@@ -34,6 +34,7 @@ class _LostFormState extends State<LostForm> {
   TextEditingController controller2=new TextEditingController();
 
   TextEditingController controller3=new TextEditingController();
+  TextEditingController controller4=new TextEditingController();
 
 
   Future<Null> _selectDate(BuildContext context) async {
@@ -103,9 +104,9 @@ class _LostFormState extends State<LostForm> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 20,bottom: 5,left: 0,right: 250),
+            margin: EdgeInsets.only(top: 20,bottom: 5,left: 0,right: 200),
             child: Text(
-            "What you lost ?",
+            "What/Whom you lost ?",
               style: GoogleFonts.poppins(
                 fontSize: 15,
                 color: Colors.white,
@@ -153,7 +154,7 @@ class _LostFormState extends State<LostForm> {
               Container(
                 margin: EdgeInsets.only(left:20),
                 child: Card(
-                  color: Colors.black,
+                  color: Colors.black54,
                   elevation: 6,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical:10,horizontal: 15),
@@ -176,6 +177,7 @@ class _LostFormState extends State<LostForm> {
                     borderRadius: BorderRadius.circular(18),
                   ),
                   child: RawMaterialButton(
+                    elevation: 20,
                     onPressed: (){
                       _selectDate(context);
                     },
@@ -193,6 +195,42 @@ class _LostFormState extends State<LostForm> {
                 ),
               ),
             ],
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              margin: EdgeInsets.only(bottom: 5,left: 21),
+              child: Text(
+                "Where ?",
+                style: GoogleFonts.poppins(
+                  fontSize: 15,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(right: 80,top: 5,bottom: 5,left: 20),
+            child: TextField(
+              cursorColor: Colors.white,
+              style: TextStyle(
+                color: Colors.white,
+              ),
+              onChanged: (location1){
+                location=location1;
+              },
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                ),
+                filled: true,
+                fillColor: Colors.black54,
+                hintStyle: TextStyle(
+                  color: Colors.grey,
+                ),
+              ),
+              controller: controller4,
+            ),
           ),
           Align(
             alignment: Alignment.centerLeft,
