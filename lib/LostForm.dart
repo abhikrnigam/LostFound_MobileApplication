@@ -1,14 +1,17 @@
-
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+
+
+
 
 class LostForm extends StatefulWidget {
+
 
 
   @override
@@ -17,35 +20,61 @@ class LostForm extends StatefulWidget {
 
 class _LostFormState extends State<LostForm> {
 
-  bool image1uploaded=false;
-  bool image2uploaded=false;
-  Timestamp timeFromDate;
-  String dataformatted;
+
+  Firestore _firestore=Firestore.instance;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getDateTime();
   }
+
+
+
   void getDateTime()
   {
     DateTime dateLost=DateTime.now();
      dataformatted=DateFormat('dd-MM-yyyy').format(dateLost);
      timeFromDate=Timestamp.fromDate(dateLost);
   }
-  List listOfImages=[];
+
+  bool image1uploaded=false;
+  bool firstTimeUploading1=true;
+
+  bool image2uploaded=false;
+  bool firstTimeUploading2=true;
+
+
+
+
+  Timestamp timeFromDate;
+  String dataformatted;
+
   String name;
   String item;
   String location;
   String description;
+
   File image1;
   File image2;
+
   TextEditingController controller1=new TextEditingController();
-
   TextEditingController controller2=new TextEditingController();
-
   TextEditingController controller3=new TextEditingController();
   TextEditingController controller4=new TextEditingController();
+
+
+
+  void updateData(){
+    _firestore.collection("lost").add({
+      "name":controller1.text,
+      "itemlost": controller2.text,
+      "location":controller4.text,
+      "description":controller3.text,
+      "timeLost":timeFromDate,
+    });
+  }
 
 
   Future<Null> _selectDate(BuildContext context) async {
@@ -63,51 +92,98 @@ class _LostFormState extends State<LostForm> {
     });
   }
 
-  Future<Widget> getImage1()async{
-    if(!image1uploaded) {
-      var img = await ImagePicker.pickImage(source: ImageSource.gallery);
-      image1 = img;
-      image1uploaded=true;
-      return Image.file(image1);
-    }
-    else{
-      return IconButton(
-        icon: Icon(
-          Icons.add_circle,
-          size: 35,
-          color: Colors.white,
+
+
+  Future<Widget> giveChild()async
+  {
+    if(!image1uploaded)
+    {
+      return Container(
+        margin: EdgeInsets.symmetric(vertical: 3,horizontal: 10),
+        height: MediaQuery.of(context).size.height*0.6,
+        width:  MediaQuery.of(context).size.width*0.45,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.black54
         ),
-        onPressed: (){
-          setState(() {
-            getImage1();
-          });
-        },
+        child: IconButton(
+          onPressed: (){
+            setState(() {
+              image1uploaded=true;
+            });
+          },
+          icon: Icon(
+            Icons.add_circle,
+            size: 35,
+            color: Colors.white,
+          ),
+        ),
+      );
+    }
+    if(image1uploaded && firstTimeUploading1)
+    {
+      return Container(
+        margin: EdgeInsets.symmetric(vertical: 3,horizontal: 10),
+        height: MediaQuery.of(context).size.height*0.6,
+        width:  MediaQuery.of(context).size.width*0.45,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.black54
+        ),
+        child: FutureBuilder(
+          future: setFileImage(),
+          builder: (context,snapshot){
+            if(snapshot.connectionState==ConnectionState.waiting){
+              return Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.white,
+                ),
+              );
+            }
+            else
+              {
+                firstTimeUploading1=false;
+                return Container(
+                    margin: EdgeInsets.symmetric(vertical: 3,horizontal: 10),
+                    height: MediaQuery.of(context).size.height*0.6,
+                    width:  MediaQuery.of(context).size.width*0.45,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.black54
+                    ),
+                    child: Image.file(snapshot.data,fit: BoxFit.contain,)
+                );
+              }
+          },
+        ),
+      );
+    }
+    else if(image1uploaded==true && firstTimeUploading1==false) {
+      return Container(
+        margin: EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+        height: MediaQuery
+            .of(context)
+            .size
+            .height * 0.6,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width * 0.45,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.black54
+        ),
+        child: Image.file(image1,fit: BoxFit.contain,),
       );
     }
   }
 
-  Future<Widget> getImage2()async{
-    if(!image2uploaded) {
-      var img = await ImagePicker.pickImage(source: ImageSource.gallery);
-      image2 = img;
-      image2uploaded=true;
-      return Image.file(image2);
-    }
-    else{
-      return IconButton(
-        icon: Icon(
-          Icons.add_circle,
-          size: 35,
-          color: Colors.white,
-        ),
-        onPressed: (){
-          setState(() {
-            getImage2();
-          });
-        },
-      );
-    }
+  Future setFileImage() async{
+    var image=await ImagePicker.pickImage(source: ImageSource.gallery);
+    image1 = image;
+    return image1;
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -344,24 +420,21 @@ class _LostFormState extends State<LostForm> {
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
                     children: <Widget>[
-                      Container(
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.add_circle,
-                            size: 35,
-                            color: Colors.white,
-                          ),
-                          onPressed: (){
+                      FutureBuilder(
+                        future: giveChild(),
+                        builder: (context,snapshot){
+                          if(snapshot.connectionState==ConnectionState.waiting){
+                            return Center(
+                              child: CircularProgressIndicator(
+                                backgroundColor: Colors.white,
+                              ),
+                            );
+                          }
+                          else return Container(
+                            child: snapshot.data,
+                          );
+                        },
 
-                          },
-                        ),
-                        margin: EdgeInsets.symmetric(vertical: 3,horizontal: 10),
-                        height: MediaQuery.of(context).size.height*0.6,
-                        width:  MediaQuery.of(context).size.width*0.45,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.black54,
-                        ),
                       ),
                       Container(
                         child: IconButton(
@@ -393,7 +466,30 @@ class _LostFormState extends State<LostForm> {
             ),
             child: RawMaterialButton(
               onPressed: (){
+                  if(controller1.text.toString()=="" || controller2.text.toString()=="" || controller3.text.toString()=="" || controller4.text.toString()==""){
 
+                    return Alert(
+                        context: context,
+                        title: "Incomplete Information",
+                        desc: "One or more fields are empty",
+                        buttons: [
+                          DialogButton(
+                            child: Text("Okay",style: TextStyle(color: Colors.black),),
+                            onPressed: (){
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ]
+                    ).show();
+                  }
+                  else
+                    {
+                      updateData();
+                      controller1.clear();
+                      controller2.clear();
+                      controller3.clear();
+                      controller4.clear();
+                  }
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical:5.0, horizontal: 20.0),
