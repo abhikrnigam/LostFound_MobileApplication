@@ -33,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
           width: MediaQuery.of(context).size.width*0.7,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text("Note: $_error",style: GoogleFonts.poppins(
+            child: Text("Error: $_error",style: GoogleFonts.poppins(
               color: Colors.black,
               fontSize: 16,
             ),
@@ -53,18 +53,21 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               children: <Widget>[
                 buildError(),
-                Container(
-                  margin: EdgeInsets.only(top: 100,bottom: 10),
-                  child: Material(
-                    color: Colors.black12,
-                    child: Text
-                      (
-                        "Lost & Found",
-                        style: GoogleFonts.poppins(
-                          fontSize: 45,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        )
+                Hero(
+                  tag:'lostandfound',
+                  child: Container(
+                    margin: EdgeInsets.only(top: 100,bottom: 10),
+                    child: Material(
+                      color: Colors.black12,
+                      child: Text
+                        (
+                          "Lost & Found",
+                          style: GoogleFonts.poppins(
+                            fontSize: 45,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          )
+                      ),
                     ),
                   ),
                 ),
@@ -72,6 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Padding(
                   padding:  EdgeInsets.symmetric(vertical:15.0,horizontal:12.0),
                   child: TextField(
+                    keyboardType: TextInputType.emailAddress,
                     controller: emailController,
                     textAlign: TextAlign.center,
                     autofocus: true,
@@ -162,38 +166,41 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
                   },
                 ),
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text("Using this first time? Register here",style: GoogleFonts.poppins(
-                        color: Colors.white
-                      ),),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
+                Container(
+                  margin: EdgeInsets.only(top: 40),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Text("Using this first time? Register here",style: GoogleFonts.poppins(
+                          color: Colors.white
+                        ),),
                       ),
-                      child: RawMaterialButton(
-                        shape: RoundedRectangleBorder(
+                      Container(
+                        decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        fillColor: Colors.grey,
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>RegisterScreen()));
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Text("Register",style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontSize: 18,
+                        child: RawMaterialButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
                           ),
+                          fillColor: Colors.grey,
+                          onPressed: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>RegisterScreen()));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text("Register",style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),
+                            ),
                           ),
-                        ),
 
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),
