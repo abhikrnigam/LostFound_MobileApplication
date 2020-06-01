@@ -37,7 +37,7 @@ class MainScreen extends StatelessWidget {
                 elevation: 6,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal:25.0,vertical: 10),
-                  child: Text("Lost Something",
+                  child: Text("Lost",
                     style: GoogleFonts.robotoSlab(
                         fontSize: 20,
                       color: Colors.black,
@@ -61,7 +61,7 @@ class MainScreen extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal:25.0,vertical: 10),
                           child: Text(
-                              "Found Something",
+                              "Found",
                             style: GoogleFonts.robotoSlab(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,

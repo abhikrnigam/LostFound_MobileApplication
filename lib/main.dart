@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'MainScreen.dart';
+import 'package:lostfound/LoginScreen.dart';
+
+
 void main() {
   runApp(MyApp());
 }
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
               accentColorBrightness: Brightness.dark,
       ),
-      home: MainScreen(),
+      home: LoginScreen(),
     );
 
   }
