@@ -148,7 +148,9 @@ class _LostFormState extends State<LostForm> {
                         borderRadius: BorderRadius.circular(20),
                         color: Colors.black54
                     ),
-                    child: Image.file(snapshot.data,fit: BoxFit.fill,)
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.file(snapshot.data,fit: BoxFit.fill,))
                 );
               }
           },
@@ -166,7 +168,9 @@ class _LostFormState extends State<LostForm> {
             borderRadius: BorderRadius.circular(20),
             color: Colors.black54
         ),
-        child: Image.file(image1,fit: BoxFit.fill,),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+            child: Image.file(image1,fit: BoxFit.cover,)),
       );
     }
   }
@@ -227,7 +231,9 @@ class _LostFormState extends State<LostForm> {
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.black54
                   ),
-                  child: Image.file(snapshot.data,fit: BoxFit.fill,)
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                      child: Image.file(snapshot.data,fit: BoxFit.fill,))
               );
             }
           },
@@ -245,7 +251,9 @@ class _LostFormState extends State<LostForm> {
             borderRadius: BorderRadius.circular(20),
             color: Colors.black54
         ),
-        child: Image.file(image2,fit: BoxFit.fill,),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+            child: Image.file(image2,fit: BoxFit.fill,)),
       );
     }
   }
