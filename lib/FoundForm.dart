@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,9 @@ class FoundForm extends StatefulWidget {
 }
 
 class _FoundFormState extends State<FoundForm> {
+  FirebaseAuth _auth=FirebaseAuth.instance;
+  Firestore _firestore=Firestore.instance;
+  String description;
 
   File image1;
   File image2;
@@ -17,6 +22,19 @@ class _FoundFormState extends State<FoundForm> {
 
   bool image2uploaded=false;
   bool firstTimeUploading2=true;
+
+  TextEditingController descriptionController=TextEditingController();
+  
+  
+  
+  
+  void updateData(){
+    _firestore.collection("found").add({
+      "name":nameController.text,
+      "description":descriptionController.text,
+      "email":_auth.currentUser().toString(),
+    });
+  }
 
   Future setFileImage1() async{
     var image=await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -330,6 +348,69 @@ class _FoundFormState extends State<FoundForm> {
                     ],
                   ),
                 ),
+
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                    child: Text(
+                      "Give a Description",
+                      style: GoogleFonts.poppins(
+                        fontSize: 15,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 15),
+                  child: TextField(
+                    maxLines: 5,
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                    maxLength: 300,
+                    onChanged: (DESCRIPTION){
+                      description=DESCRIPTION;
+                    },
+                    decoration: InputDecoration(
+
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                      ),
+                      filled: true,
+                      fillColor: Colors.black54,
+                    ),
+                    controller: descriptionController,
+                  ),
+                ),
+
+
+                  Container(
+                    margin: EdgeInsets.only(top: 15),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20)
+                    ),
+                    child: RawMaterialButton(
+                      onPressed: (){
+                        updateData();
+                        nameController.clear();
+                        itemController.clear();
+                        descriptionController.clear();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text("Submit",style: GoogleFonts.poppins(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),),
+                      ),
+                    ),
+                  ),
+
+
               ],
             ),
       ],

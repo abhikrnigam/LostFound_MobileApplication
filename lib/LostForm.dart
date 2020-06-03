@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,6 +20,7 @@ class LostForm extends StatefulWidget {
 }
 
 class _LostFormState extends State<LostForm> {
+  FirebaseAuth _auth=FirebaseAuth.instance;
 
 
   Firestore _firestore=Firestore.instance;
@@ -73,6 +75,7 @@ class _LostFormState extends State<LostForm> {
       "location":controller4.text,
       "description":controller3.text,
       "timeLost":timeFromDate,
+      "email":_auth.currentUser().toString(),
     });
   }
 
@@ -246,7 +249,7 @@ class _LostFormState extends State<LostForm> {
         width: MediaQuery
             .of(context)
             .size
-            .width * 0.45,
+            .width * 0.40,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             color: Colors.black54
@@ -606,7 +609,6 @@ class _LostFormState extends State<LostForm> {
           ),
         ],
       ),
-
     ],
     ),
       ),

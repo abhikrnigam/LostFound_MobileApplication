@@ -2,6 +2,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:lostfound/LoginScreen.dart';
 import 'package:lostfound/MainScreen.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -146,13 +147,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   try {
                     _auth.createUserWithEmailAndPassword(
                         email: email, password: password);
-                    await _firestore.collection("User")
-                        .document("$email")
-                        .setData({
-                      "email": email,
-                    });
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MainScreen()));
+                        MaterialPageRoute(builder: (context) => LoginScreen()));
                     emailController.clear();
                     passwordController.clear();
                   }
