@@ -12,6 +12,7 @@ class FoundForm extends StatefulWidget {
 
 class _FoundFormState extends State<FoundForm> {
   FirebaseAuth _auth=FirebaseAuth.instance;
+  FirebaseUser _user;
   Firestore _firestore=Firestore.instance;
   String description;
 
@@ -24,15 +25,18 @@ class _FoundFormState extends State<FoundForm> {
   bool firstTimeUploading2=true;
 
   TextEditingController descriptionController=TextEditingController();
-  
-  
-  
-  
+
+
+
+  void getUser()async{
+    _user=await _auth.currentUser();
+  }
+
   void updateData(){
     _firestore.collection("found").add({
       "name":nameController.text,
       "description":descriptionController.text,
-      "email":_auth.currentUser().toString(),
+      "email": _user.email,
     });
   }
 
@@ -218,6 +222,12 @@ class _FoundFormState extends State<FoundForm> {
 
   TextEditingController nameController=TextEditingController();
   TextEditingController itemController=TextEditingController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUser();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

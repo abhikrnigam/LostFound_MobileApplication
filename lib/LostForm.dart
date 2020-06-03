@@ -22,7 +22,7 @@ class LostForm extends StatefulWidget {
 class _LostFormState extends State<LostForm> {
   FirebaseAuth _auth=FirebaseAuth.instance;
 
-
+  FirebaseUser _user;
   Firestore _firestore=Firestore.instance;
 
   @override
@@ -30,6 +30,7 @@ class _LostFormState extends State<LostForm> {
     // TODO: implement initState
     super.initState();
     getDateTime();
+    getUser();
   }
 
 
@@ -75,7 +76,7 @@ class _LostFormState extends State<LostForm> {
       "location":controller4.text,
       "description":controller3.text,
       "timeLost":timeFromDate,
-      "email":_auth.currentUser().toString(),
+      "email":_user.email,
     });
   }
 
@@ -285,6 +286,9 @@ class _LostFormState extends State<LostForm> {
 
 
 
+  void getUser()async{
+    _user=await _auth.currentUser();
+  }
 
 
 
