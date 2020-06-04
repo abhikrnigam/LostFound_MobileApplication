@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 
 
@@ -20,6 +22,8 @@ class LostForm extends StatefulWidget {
 }
 
 class _LostFormState extends State<LostForm> {
+  FirebaseStorage storage;
+  String _id;
   FirebaseAuth _auth=FirebaseAuth.instance;
 
   FirebaseUser _user;
@@ -70,16 +74,30 @@ class _LostFormState extends State<LostForm> {
 
 
   void updateData(){
-    _firestore.collection("lost").add({
+    _id=_firestore.collection("lost").document().documentID;
+    _firestore.collection("lost").document(_id).setData({
       "name":controller1.text,
       "itemlost": controller2.text,
       "location":controller4.text,
       "description":controller3.text,
       "timeLost":timeFromDate,
       "email":_user.email,
+      "uid":_id,
     });
   }
 
+  void uploadImages() async{
+    if(image1uploaded==true){
+      StorageReference storage=FirebaseStorage.instance.ref().child("$_id+image1");
+      StorageUploadTask uploadTask=storage.putFile(image1);
+      StorageTaskSnapshot taskSnapshot=await uploadTask.onComplete;
+    }
+    if(image2uploaded==true){
+      StorageReference storage=FirebaseStorage.instance.ref().child("$_id+image2");
+      StorageUploadTask uploadTask=storage.putFile(image2);
+      StorageTaskSnapshot taskSnapshot=await uploadTask.onComplete;
+    }
+  }
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker
@@ -592,10 +610,15 @@ class _LostFormState extends State<LostForm> {
                   else
                     {
                       updateData();
+                      uploadImages();
                       controller1.clear();
                       controller2.clear();
                       controller3.clear();
                       controller4.clear();
+                      setState(() {
+                        image1uploaded=false;
+                        image2uploaded=false;
+                      });
                   }
               },
               child: Padding(

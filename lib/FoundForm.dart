@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class FoundForm extends StatefulWidget {
   @override
@@ -11,6 +12,9 @@ class FoundForm extends StatefulWidget {
 }
 
 class _FoundFormState extends State<FoundForm> {
+
+  FirebaseStorage storage;
+  String _id;
   FirebaseAuth _auth=FirebaseAuth.instance;
   FirebaseUser _user;
   Firestore _firestore=Firestore.instance;
@@ -28,17 +32,37 @@ class _FoundFormState extends State<FoundForm> {
 
 
 
-  void getUser()async{
+  void getUser()  async
+  {
     _user=await _auth.currentUser();
   }
 
   void updateData(){
-    _firestore.collection("found").add({
+    _id=_firestore.collection("found").document().documentID;
+    _firestore.collection("found").document(_id).setData({
       "name":nameController.text,
       "description":descriptionController.text,
       "email": _user.email,
+      "uid":_id,
     });
   }
+
+
+  void uploadImages() async{
+    if(image1uploaded)
+    {
+      StorageReference storage=FirebaseStorage.instance.ref().child("$_id+image1");
+      StorageUploadTask uploadTask=storage.putFile(image1);
+      StorageTaskSnapshot taskSnapshot=await uploadTask.onComplete;
+    }
+    if(image2uploaded)
+    {
+      StorageReference storage=FirebaseStorage.instance.ref().child("$_id+image2");
+      StorageUploadTask uploadTask=storage.putFile(image2);
+      StorageTaskSnapshot taskSnapshot=await uploadTask.onComplete;
+    }
+  }
+
 
   Future setFileImage1() async{
     var image=await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -405,9 +429,14 @@ class _FoundFormState extends State<FoundForm> {
                     child: RawMaterialButton(
                       onPressed: (){
                         updateData();
+                        uploadImages();
                         nameController.clear();
                         itemController.clear();
                         descriptionController.clear();
+                        setState(() {
+                          image1uploaded=false;
+                          image2uploaded=false;
+                        });
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),

@@ -146,9 +146,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 else {
                   try {
                     _auth.createUserWithEmailAndPassword(
-                        email: email, password: password);
+                        email: email, password: password).then((value) => {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()));
+                    MaterialPageRoute(builder: (context) => LoginScreen()))
+                    });
                     emailController.clear();
                     passwordController.clear();
                   }
