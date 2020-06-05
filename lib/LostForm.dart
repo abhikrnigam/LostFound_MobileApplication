@@ -622,6 +622,7 @@ class _LostFormState extends State<LostForm> {
                       controller3.clear();
                       controller4.clear();
                       setState(() {
+                        Scaffold.of(context).showSnackBar(SnackBar(content: Text("Your response is submitted."),));
                         image1uploaded=false;
                         image2uploaded=false;
                       });

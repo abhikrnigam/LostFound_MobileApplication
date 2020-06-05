@@ -268,56 +268,29 @@ class _FoundFormState extends State<FoundForm> {
           ),
         ),
       ),
-      body: Container(
-          child: ListView(
+      body: Builder(
+        builder:(context) =>Container(
+            child: ListView(
 
-            children: <Widget>
-          [
-            Column(
-              children: <Widget>[
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    margin: EdgeInsets.only(left: 20,top: 30),
-                    child: Text("Enter your name",style: GoogleFonts.poppins(
-                      fontSize: 15,
-                      color: Colors.white,
-                    ),
-                    ),
-                  ),
-                ),
-              Container(
-                margin: EdgeInsets.only(left: 15,right: 20,top: 5),
-                child: TextField(
-                  controller: nameController,
-                  decoration: InputDecoration(
-                    fillColor: Colors.black54,
-                    filled: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
+              children: <Widget>
+            [
+              Column(
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      margin: EdgeInsets.only(left: 20,top: 30),
+                      child: Text("Enter your name",style: GoogleFonts.poppins(
+                        fontSize: 15,
+                        color: Colors.white,
+                      ),
+                      ),
                     ),
                   ),
-                  keyboardType: TextInputType.text,
-                  onChanged: (val){
-                    _name=val;
-                  },
-                ),
-              ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    margin: EdgeInsets.only(left: 20,top:15),
-                    child: Text("What you found?",style: GoogleFonts.poppins(
-                      fontSize: 15,
-                      color: Colors.white,
-                    ),
-                    ),
-                  ),
-                ),
                 Container(
                   margin: EdgeInsets.only(left: 15,right: 20,top: 5),
                   child: TextField(
-                    controller: itemController,
+                    controller: nameController,
                     decoration: InputDecoration(
                       fillColor: Colors.black54,
                       filled: true,
@@ -327,140 +300,173 @@ class _FoundFormState extends State<FoundForm> {
                     ),
                     keyboardType: TextInputType.text,
                     onChanged: (val){
-                      _item=val;
+                      _name=val;
                     },
                   ),
                 ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    margin: EdgeInsets.only(left: 20,top:20,bottom: 8),
-                    child: Text(
-                      "Add Images (Optional, yet helpful! )",
-                      style: GoogleFonts.poppins(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 150,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    children: <Widget>[
-                      FutureBuilder(
-                        future: giveChild1(),
-                        builder: (context,snapshot){
-                          if(snapshot.connectionState==ConnectionState.waiting){
-                            return Center(
-                              child: CircularProgressIndicator(
-                                backgroundColor: Colors.white,
-                              ),
-                            );
-                          }
-                          else return Container(
-                            child: snapshot.data,
-                          );
-                        },
-
-                      ),
-                      FutureBuilder(
-                        future: giveChild2(),
-                        builder: (context,snapshot){
-                          if(snapshot.connectionState==ConnectionState.waiting){
-                            return Center(
-                              child: CircularProgressIndicator(
-                                backgroundColor: Colors.white,
-                              ),
-                            );
-                          }
-                          else return Container(
-                            child: snapshot.data,
-                          );
-                        },
-
-                      ),
-
-                    ],
-                  ),
-                ),
-
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-                    child: Text(
-                      "Give a Description",
-                      style: GoogleFonts.poppins(
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      margin: EdgeInsets.only(left: 20,top:15),
+                      child: Text("What you found?",style: GoogleFonts.poppins(
                         fontSize: 15,
                         color: Colors.white,
                       ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 15),
-                  child: TextField(
-                    maxLines: 5,
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                    maxLength: 300,
-                    onChanged: (DESCRIPTION){
-                      description=DESCRIPTION;
-                    },
-                    decoration: InputDecoration(
-
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
                       ),
-                      filled: true,
-                      fillColor: Colors.black54,
                     ),
-                    controller: descriptionController,
                   ),
-                ),
-
-
                   Container(
-                    margin: EdgeInsets.only(top: 15),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20)
-                    ),
-                    child: RawMaterialButton(
-                      onPressed: (){
-                        updateData();
-                        uploadImage1();
-                        uploadImage2();
-                        nameController.clear();
-                        itemController.clear();
-                        descriptionController.clear();
-                        setState(() {
-                          image1uploaded=false;
-                          image2uploaded=false;
-                        });
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text("Submit",style: GoogleFonts.poppins(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),),
+                    margin: EdgeInsets.only(left: 15,right: 20,top: 5),
+                    child: TextField(
+                      controller: itemController,
+                      decoration: InputDecoration(
+                        fillColor: Colors.black54,
+                        filled: true,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                        ),
                       ),
+                      keyboardType: TextInputType.text,
+                      onChanged: (val){
+                        _item=val;
+                      },
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      margin: EdgeInsets.only(left: 20,top:20,bottom: 8),
+                      child: Text(
+                        "Add Images (Optional, yet helpful! )",
+                        style: GoogleFonts.poppins(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 150,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      children: <Widget>[
+                        FutureBuilder(
+                          future: giveChild1(),
+                          builder: (context,snapshot){
+                            if(snapshot.connectionState==ConnectionState.waiting){
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  backgroundColor: Colors.white,
+                                ),
+                              );
+                            }
+                            else return Container(
+                              child: snapshot.data,
+                            );
+                          },
+
+                        ),
+                        FutureBuilder(
+                          future: giveChild2(),
+                          builder: (context,snapshot){
+                            if(snapshot.connectionState==ConnectionState.waiting){
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  backgroundColor: Colors.white,
+                                ),
+                              );
+                            }
+                            else return Container(
+                              child: snapshot.data,
+                            );
+                          },
+
+                        ),
+
+                      ],
+                    ),
+                  ),
+
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                      child: Text(
+                        "Give a Description",
+                        style: GoogleFonts.poppins(
+                          fontSize: 15,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 15),
+                    child: TextField(
+                      maxLines: 5,
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                      maxLength: 300,
+                      onChanged: (DESCRIPTION){
+                        description=DESCRIPTION;
+                      },
+                      decoration: InputDecoration(
+
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                        ),
+                        filled: true,
+                        fillColor: Colors.black54,
+                      ),
+                      controller: descriptionController,
                     ),
                   ),
 
 
-              ],
-            ),
-      ],
-          ),
+                    Container(
+                      margin: EdgeInsets.only(top: 15),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20)
+                      ),
+                      child: RawMaterialButton(
+                        onPressed: (){
+                          updateData();
+                          uploadImage1();
+                          uploadImage2();
+                          nameController.clear();
+                          itemController.clear();
+                          descriptionController.clear();
+                          setState(() {
+                            Scaffold.of(context).showSnackBar(SnackBar(content: Text("Your response is submitted.",style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                            ),),));
+                            image1uploaded=false;
+                            image2uploaded=false;
+                          });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text("Submit",style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),),
+                        ),
+                      ),
+                    ),
 
+
+                ],
+              ),
+        ],
+            ),
+
+        ),
       ),
     );
   }
