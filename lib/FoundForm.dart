@@ -48,18 +48,23 @@ class _FoundFormState extends State<FoundForm> {
   }
 
 
-  void uploadImages() async{
-    if(image1uploaded)
-    {
-      StorageReference storage=FirebaseStorage.instance.ref().child("$_id+image1");
-      StorageUploadTask uploadTask=storage.putFile(image1);
-      StorageTaskSnapshot taskSnapshot=await uploadTask.onComplete;
+  void uploadImage1() async {
+    if (image1uploaded) {
+      StorageReference storage = FirebaseStorage.instance.ref().child(
+          "$_id+image1");
+      StorageUploadTask uploadTask = storage.putFile(image1);
+      StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+      print("Image1 Uploaded");
     }
+  }
+  void uploadImage2() async
+  {
     if(image2uploaded)
     {
-      StorageReference storage=FirebaseStorage.instance.ref().child("$_id+image2");
-      StorageUploadTask uploadTask=storage.putFile(image2);
+      StorageReference storage1=FirebaseStorage.instance.ref().child("$_id+image2");
+      StorageUploadTask uploadTask=storage1.putFile(image2);
       StorageTaskSnapshot taskSnapshot=await uploadTask.onComplete;
+      print("Image2 Uploaded");
     }
   }
 
@@ -429,7 +434,8 @@ class _FoundFormState extends State<FoundForm> {
                     child: RawMaterialButton(
                       onPressed: (){
                         updateData();
-                        uploadImages();
+                        uploadImage1();
+                        uploadImage2();
                         nameController.clear();
                         itemController.clear();
                         descriptionController.clear();
