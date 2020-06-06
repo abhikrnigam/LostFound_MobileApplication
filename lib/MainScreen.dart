@@ -2,6 +2,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:lostfound/LostForm.dart';
 import 'package:lostfound/FoundForm.dart';
+import 'package:lostfound/ExploreScreen.dart';
+
+
+
 class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -76,6 +80,26 @@ class MainScreen extends StatelessWidget {
                         ),
                         ),
                 ),
+            Spacer(),
+            Container(
+
+              decoration: BoxDecoration(
+                color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              ),
+              child: RawMaterialButton(
+                onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ExploreScreen()));
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Text("Explore",style: GoogleFonts.poppins(
+                    color: Colors.black87,
+                    fontWeight: FontWeight.bold,
+                  ),),
+                ),
+              ),
+            ),
 
             Spacer(flex: 3,),
           ],
