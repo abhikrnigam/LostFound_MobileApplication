@@ -67,6 +67,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   ),
                 ],
               ),
+              Spacer(),
               StreamBuilder<QuerySnapshot>(
                 stream: _firestore.collection("$getResult").snapshots(),
                 builder:(context,snapshot) {
@@ -77,7 +78,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   }
                   else{
                     return Container(
-                      height: 100,
+                      height: MediaQuery.of(context).size.height*0.75,
                       child: ListView.builder(
                         itemCount: snapshot.data.documents.length,
                         itemBuilder: (context,index){
@@ -87,15 +88,14 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           String location=snapshot.data.documents[index]["location"];
                           String description=snapshot.data.documents[index]["description"];
                           return Container(
+                            margin: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                            width: MediaQuery.of(context).size.width*0.75,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20)
-                            ),
-                            margin: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
-                            child: Material(
-                              elevation: 10,
                               color: Colors.white,
-                              child: obj.lostCard(name,description,itemLost,location),
+                              borderRadius: BorderRadius.circular(20),
                             ),
+
+                            child: obj.lostCard(name,description,itemLost,location,dateTime),
                           );
                         },
                       ),
@@ -103,6 +103,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   }
                 },
               ),
+              Spacer(),
             ],
           ),
         ),

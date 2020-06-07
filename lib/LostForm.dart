@@ -296,12 +296,18 @@ class _LostFormState extends State<LostForm> {
 
   Future setFileImage1() async{
     var image=await ImagePicker.pickImage(source: ImageSource.gallery);
+    if(image==null){
+      return null;
+    }
     image1 = image;
     return image1;
   }
 
   Future setFileImage2() async{
     var image=await ImagePicker.pickImage(source: ImageSource.gallery);
+    if(image==null){
+      return null;
+    }
     image2 = image;
     return image2;
   }
