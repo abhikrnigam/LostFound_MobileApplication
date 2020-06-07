@@ -3,8 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-
+import 'LostFoundCards.dart';
 
 
 class ExploreScreen extends StatefulWidget {
@@ -13,6 +12,7 @@ class ExploreScreen extends StatefulWidget {
 }
 
 class _ExploreScreenState extends State<ExploreScreen> {
+  LostFoundCards obj=new LostFoundCards();
   String getResult="lost";
   Firestore _firestore=Firestore.instance;
   Color lostButtonColor=Colors.black54;
@@ -76,17 +76,29 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     );
                   }
                   else{
-                    return ListView.builder(
-                      itemCount: snapshot.data.documents.length,
-                      itemBuilder: (context,index){
-                        String name=snapshot.data.documents[index]["name"];
-                        String itemLost=snapshot.data.documents[index]["itemLost"];
-                        return Material(
-                          elevation: 10,
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                        );
-                      },
+                    return Container(
+                      height: 100,
+                      child: ListView.builder(
+                        itemCount: snapshot.data.documents.length,
+                        itemBuilder: (context,index){
+                          Timestamp dateTime=snapshot.data.documents[index]["timeLost"];
+                          String name=snapshot.data.documents[index]["name"];
+                          String itemLost=snapshot.data.documents[index]["itemlost"];
+                          String location=snapshot.data.documents[index]["location"];
+                          String description=snapshot.data.documents[index]["description"];
+                          return Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20)
+                            ),
+                            margin: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
+                            child: Material(
+                              elevation: 10,
+                              color: Colors.white,
+                              child: obj.lostCard(name,description,itemLost,location),
+                            ),
+                          );
+                        },
+                      ),
                     );
                   }
                 },

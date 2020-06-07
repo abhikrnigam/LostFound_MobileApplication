@@ -328,323 +328,325 @@ class _LostFormState extends State<LostForm> {
 
         ),
       ),
-      body: SafeArea(
-          child:
-          ListView(
-            children: <Widget>[ Column(
-        children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(top: 20,bottom: 5,left: 0,right: 250),
-              child: Text(
-                "Enter your name",
-                  style: GoogleFonts.poppins(
-                    fontSize: 15,
-                    color: Colors.white,
-                  ),
-                  ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 15,vertical: 2),
-              child: TextField(
-                cursorColor: Colors.white,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
-                ),
-                onChanged: (NAME){
-                  name=NAME;
-                },
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                  ),
-                  filled: true,
-                  fillColor: Colors.black54,
-                  hintStyle: TextStyle(
-                    color: Colors.grey,
-                  ),
-                ),
-                controller: controller1,
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 20,bottom: 5,left: 0,right: 200),
-              child: Text(
-              "What/Whom you lost ?",
-                style: GoogleFonts.poppins(
-                  fontSize: 15,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 15,vertical: 2),
-              child: TextField(
-                cursorColor: Colors.white,
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-                onChanged: (ITEM){
-                  item=ITEM;
-                },
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                  ),
-                  filled: true,
-                  fillColor: Colors.black54,
-                  hintStyle: TextStyle(
-                    color: Colors.grey,
-                  ),
-                ),
-                controller: controller2,
-              ),
-            ),
-            Align(
-                alignment: Alignment.centerLeft,
-              child: Container(
-                margin: EdgeInsets.only(top: 20,left: 30,),
+      body: Builder(
+        builder:(context) => SafeArea(
+            child:
+            ListView(
+              children: <Widget>[ Column(
+          children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(top: 20,bottom: 5,left: 0,right: 250),
                 child: Text(
-                    "When?",
-                  style: GoogleFonts.poppins(
+                  "Enter your name",
+                    style: GoogleFonts.poppins(
+                      fontSize: 15,
+                      color: Colors.white,
+                    ),
+                    ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 15,vertical: 2),
+                child: TextField(
+                  cursorColor: Colors.white,
+                  style: TextStyle(
+                    fontSize: 16,
                     color: Colors.white,
+                  ),
+                  onChanged: (NAME){
+                    name=NAME;
+                  },
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                    filled: true,
+                    fillColor: Colors.black54,
+                    hintStyle: TextStyle(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  controller: controller1,
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 20,bottom: 5,left: 0,right: 200),
+                child: Text(
+                "What/Whom you lost ?",
+                  style: GoogleFonts.poppins(
                     fontSize: 15,
+                    color: Colors.white,
                   ),
                 ),
               ),
-            ),
-            Row(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(left:20),
-                  child: Card(
-                    color: Colors.black54,
-                    elevation: 6,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical:10,horizontal: 15),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 15,vertical: 2),
+                child: TextField(
+                  cursorColor: Colors.white,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  onChanged: (ITEM){
+                    item=ITEM;
+                  },
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                    filled: true,
+                    fillColor: Colors.black54,
+                    hintStyle: TextStyle(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  controller: controller2,
+                ),
+              ),
+              Align(
+                  alignment: Alignment.centerLeft,
+                child: Container(
+                  margin: EdgeInsets.only(top: 20,left: 30,),
+                  child: Text(
+                      "When?",
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(left:20),
+                    child: Card(
+                      color: Colors.black54,
+                      elevation: 6,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical:10,horizontal: 15),
+                        child: Text(
+                          "$dataformatted",
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 25,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      margin: EdgeInsets.only(bottom: 20,left: 18,top: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                      child: RawMaterialButton(
+                        elevation: 20,
+                        onPressed: (){
+                          _selectDate(context);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Text(
+                            "Select Date",
+                            style: GoogleFonts.poppins(
+                              fontSize: 20,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 5,left: 21),
+                  child: Text(
+                    "Where ?",
+                    style: GoogleFonts.poppins(
+                      fontSize: 15,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(right: 80,top: 5,bottom: 5,left: 20),
+                child: TextField(
+                  cursorColor: Colors.white,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  onChanged: (location1){
+                    location=location1;
+                  },
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                    filled: true,
+                    fillColor: Colors.black54,
+                    hintStyle: TextStyle(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  controller: controller4,
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                  child: Text(
+                      "Give a Description",
+                    style: GoogleFonts.poppins(
+                      fontSize: 15,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 15),
+                child: TextField(
+                  maxLines: 5,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  maxLength: 300,
+                  onChanged: (DESCRIPTION){
+                    description=DESCRIPTION;
+                  },
+                  decoration: InputDecoration(
+
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                    filled: true,
+                    fillColor: Colors.black54,
+                  ),
+                  controller: controller3,
+                ),
+              ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      margin: EdgeInsets.only(left: 20,top:5,bottom: 5),
                       child: Text(
-                        "$dataformatted",
+                        "Add Images (Optional, yet helpful! )",
                         style: GoogleFonts.poppins(
                           color: Colors.white,
-                          fontSize: 25,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
                     ),
                   ),
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    margin: EdgeInsets.only(bottom: 20,left: 18,top: 20),
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(18),
-                    ),
-                    child: RawMaterialButton(
-                      elevation: 20,
-                      onPressed: (){
-                        _selectDate(context);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Text(
-                          "Select Date",
-                          style: GoogleFonts.poppins(
-                            fontSize: 20,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                margin: EdgeInsets.only(bottom: 5,left: 21),
-                child: Text(
-                  "Where ?",
-                  style: GoogleFonts.poppins(
-                    fontSize: 15,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(right: 80,top: 5,bottom: 5,left: 20),
-              child: TextField(
-                cursorColor: Colors.white,
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-                onChanged: (location1){
-                  location=location1;
-                },
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                  ),
-                  filled: true,
-                  fillColor: Colors.black54,
-                  hintStyle: TextStyle(
-                    color: Colors.grey,
-                  ),
-                ),
-                controller: controller4,
-              ),
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-                child: Text(
-                    "Give a Description",
-                  style: GoogleFonts.poppins(
-                    fontSize: 15,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 15),
-              child: TextField(
-                maxLines: 5,
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-                maxLength: 300,
-                onChanged: (DESCRIPTION){
-                  description=DESCRIPTION;
-                },
-                decoration: InputDecoration(
+                  Container(
+                    height: 150,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      children: <Widget>[
+                        FutureBuilder(
+                          future: giveChild1(),
+                          builder: (context,snapshot){
+                            if(snapshot.connectionState==ConnectionState.waiting){
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  backgroundColor: Colors.white,
+                                ),
+                              );
+                            }
+                            else return Container(
+                              child: snapshot.data,
+                            );
+                          },
 
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                  ),
-                  filled: true,
-                  fillColor: Colors.black54,
-                ),
-                controller: controller3,
-              ),
-            ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    margin: EdgeInsets.only(left: 20,top:5,bottom: 5),
-                    child: Text(
-                      "Add Images (Optional, yet helpful! )",
-                      style: GoogleFonts.poppins(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                      ),
+                        ),
+                        FutureBuilder(
+                          future: giveChild2(),
+                          builder: (context,snapshot){
+                            if(snapshot.connectionState==ConnectionState.waiting){
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  backgroundColor: Colors.white,
+                                ),
+                              );
+                            }
+                            else return Container(
+                              child: snapshot.data,
+                            );
+                          },
+
+                        ),
+
+                      ],
                     ),
                   ),
-                ),
                 Container(
-                  height: 150,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    children: <Widget>[
-                      FutureBuilder(
-                        future: giveChild1(),
-                        builder: (context,snapshot){
-                          if(snapshot.connectionState==ConnectionState.waiting){
-                            return Center(
-                              child: CircularProgressIndicator(
-                                backgroundColor: Colors.white,
-                              ),
-                            );
-                          }
-                          else return Container(
-                            child: snapshot.data,
-                          );
-                        },
+                  margin: EdgeInsets.only(top: 15),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20)
+              ),
+              child: RawMaterialButton(
+                // ignore: missing_return
+                onPressed: (){
+                    if(controller1.text.toString()=="" || controller2.text.toString()=="" || controller3.text.toString()=="" || controller4.text.toString()==""){
 
-                      ),
-                      FutureBuilder(
-                        future: giveChild2(),
-                        builder: (context,snapshot){
-                          if(snapshot.connectionState==ConnectionState.waiting){
-                            return Center(
-                              child: CircularProgressIndicator(
-                                backgroundColor: Colors.white,
-                              ),
-                            );
-                          }
-                          else return Container(
-                            child: snapshot.data,
-                          );
-                        },
-
-                      ),
-
-                    ],
-                  ),
-                ),
-              Container(
-                margin: EdgeInsets.only(top: 15),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20)
-            ),
-            child: RawMaterialButton(
-              // ignore: missing_return
-              onPressed: (){
-                  if(controller1.text.toString()=="" || controller2.text.toString()=="" || controller3.text.toString()=="" || controller4.text.toString()==""){
-
-                    return Alert(
-                        context: context,
-                        title: "Incomplete Information",
-                        desc: "One or more fields are empty",
-                        buttons: [
-                          DialogButton(
-                            child: Text("Okay",style: TextStyle(color: Colors.black),),
-                            onPressed: (){
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ]
-                    ).show();
-                  }
-                  else
-                    {
-                      updateData();
-                      uploadImage1();
-                      uploadImage2();
-                      controller1.clear();
-                      controller2.clear();
-                      controller3.clear();
-                      controller4.clear();
-                      setState(() {
-                        Scaffold.of(context).showSnackBar(SnackBar(content: Text("Your response is submitted."),));
-                        image1uploaded=false;
-                        image2uploaded=false;
-                      });
-                  }
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical:5.0, horizontal: 20.0),
-                child: Text(
-                  "Submit",
-                  style: GoogleFonts.poppins(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                      return Alert(
+                          context: context,
+                          title: "Incomplete Information",
+                          desc: "One or more fields are empty",
+                          buttons: [
+                            DialogButton(
+                              child: Text("Okay",style: TextStyle(color: Colors.black),),
+                              onPressed: (){
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ]
+                      ).show();
+                    }
+                    else
+                      {
+                        updateData();
+                        uploadImage1();
+                        uploadImage2();
+                        controller1.clear();
+                        controller2.clear();
+                        controller3.clear();
+                        controller4.clear();
+                        setState(() {
+                          Scaffold.of(context).showSnackBar(SnackBar(content: Text("Your response is submitted."),));
+                          image1uploaded=false;
+                          image2uploaded=false;
+                        });
+                    }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical:5.0, horizontal: 20.0),
+                  child: Text(
+                    "Submit",
+                    style: GoogleFonts.poppins(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
-      ),
+          ],
+        ),
     ],
     ),
+        ),
       ),
     );
   }
