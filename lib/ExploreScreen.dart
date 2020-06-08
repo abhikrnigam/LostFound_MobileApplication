@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -15,7 +16,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
   LostFoundCards obj=new LostFoundCards();
   String getResult="lost";
   Firestore _firestore=Firestore.instance;
-  Color lostButtonColor=Colors.black54;
+  Color lostButtonColor=Colors.black;
   Color foundButtonColor=Colors.black;
   Color lostButtonText=Colors.white;
   Color foundButtonText=Colors.white;
@@ -40,6 +41,16 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     ),
 
                     child: RawMaterialButton(
+                      onPressed: (){
+                        setState(() {
+                          lostButtonColor=Colors.white;
+                          lostButtonText=Colors.black;
+                          foundButtonColor=Colors.black;
+                          foundButtonText=Colors.white;
+                          getResult="lost";
+                        });
+
+                      },
                       child: Padding(
                         padding: const EdgeInsets.all(15.0),
                         child: Text("Lost",style: GoogleFonts.poppins(
@@ -57,6 +68,15 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     ),
 
                     child: RawMaterialButton(
+                      onPressed: (){
+                        setState(() {
+                          foundButtonColor=Colors.white;
+                          foundButtonText=Colors.black;
+                          lostButtonText=Colors.white;
+                          lostButtonColor=Colors.black;
+                          getResult="found";
+                        });
+                      },
                       child: Padding(
                         padding: const EdgeInsets.all(15.0),
                         child: Text("Found",style: GoogleFonts.poppins(
@@ -82,11 +102,19 @@ class _ExploreScreenState extends State<ExploreScreen> {
                       child: ListView.builder(
                         itemCount: snapshot.data.documents.length,
                         itemBuilder: (context,index){
-                          Timestamp dateTime=snapshot.data.documents[index]["timeLost"];
-                          String name=snapshot.data.documents[index]["name"];
-                          String itemLost=snapshot.data.documents[index]["itemlost"];
-                          String location=snapshot.data.documents[index]["location"];
-                          String description=snapshot.data.documents[index]["description"];
+
+
+                          String name = snapshot.data
+                              .documents[index]["name"];
+                          String itemLost = snapshot.data
+                              .documents[index]["itemlost"];
+                          String location = snapshot.data
+                              .documents[index]["location"];
+                          String description = snapshot.data
+                              .documents[index]["description"] ;
+                          Timestamp dateTime = snapshot.data
+                              .documents[index]["timeLost"];
+
                           return Container(
                             margin: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
                             width: MediaQuery.of(context).size.width*0.75,
@@ -95,7 +123,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                               borderRadius: BorderRadius.circular(20),
                             ),
 
-                            child: obj.lostCard(name,description,itemLost,location,dateTime),
+                            child: getResult=="lost"?obj.lostCard(name,description,itemLost,location,dateTime):obj.foundCard(name,description,itemLost),
                           );
                         },
                       ),

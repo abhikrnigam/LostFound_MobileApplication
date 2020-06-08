@@ -12,11 +12,16 @@ class LostFoundCards
   Timestamp dateTime;
   String location;
   String uid;
+  String date;
 
   Widget lostCard(name,description,itemLost,location,dateTime){
-    Timestamp date_timestamp=dateTime;
-    DateTime date1=date_timestamp.toDate();
-    String date=DateFormat('dd-MM-yyyy').format(date1);
+
+
+      Timestamp date_timestamp = dateTime;
+      DateTime date1 = date_timestamp.toDate();
+       date = DateFormat('dd-MM-yyyy').format(date1);
+
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
@@ -53,6 +58,16 @@ class LostFoundCards
             ),
           ),
         ),
+        Align(
+          alignment: Alignment.center,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 15.0,horizontal: 8),
+            child: Text("$description",style: GoogleFonts.poppins(
+                color: Colors.black,
+                fontSize: 18
+            ),),
+          ),
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -87,6 +102,56 @@ class LostFoundCards
   }
 
 
+  Widget foundCard(name,description,itemLost){
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: RichText(
+            text: TextSpan(
+                children: <TextSpan>[
+                  TextSpan(
+                      text:"$name",style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  )
+                  ),
+                  TextSpan(
+                    text:"  found  ",style:
+                  GoogleFonts.poppins(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                  ),
+                  TextSpan(
+                    text:"$itemLost",style:
+                  GoogleFonts.poppins
+                    (
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                  ),
+                ]
+            ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.center,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 15.0,horizontal: 8),
+            child: Text("$description",style: GoogleFonts.poppins(
+              color: Colors.black,
+              fontSize: 18
+            ),),
+          ),
+        )
+      ],
+    );
+  }
 
 
 

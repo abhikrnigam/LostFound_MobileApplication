@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-
+import 'package:rflutter_alert/rflutter_alert.dart';
 class FoundForm extends StatefulWidget {
   @override
   _FoundFormState createState() => _FoundFormState();
@@ -433,8 +433,26 @@ class _FoundFormState extends State<FoundForm> {
                           borderRadius: BorderRadius.circular(20)
                       ),
                       child: RawMaterialButton(
+                        // ignore: missing_return
                         onPressed: (){
-                          updateData();
+                          if(nameController.text.toString()=="" || itemController.text.toString()=="" || descriptionController.text.toString()==""){
+
+                            return Alert(
+                                context: context,
+                                title: "Incomplete Information",
+                                desc: "One or more fields are empty",
+                                buttons: [
+                                  DialogButton(
+                                    child: Text("Okay",style: TextStyle(color: Colors.black),),
+                                    onPressed: (){
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ]
+                            ).show();
+                          }
+                          else{
+                            updateData();
                           uploadImage1();
                           uploadImage2();
                           nameController.clear();
@@ -447,7 +465,8 @@ class _FoundFormState extends State<FoundForm> {
                             ),),));
                             image1uploaded=false;
                             image2uploaded=false;
-                          });
+                          });}
+
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
