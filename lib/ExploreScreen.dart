@@ -13,6 +13,7 @@ class ExploreScreen extends StatefulWidget {
 }
 
 class _ExploreScreenState extends State<ExploreScreen> {
+
   LostFoundCards obj=new LostFoundCards();
   String getResult="lost";
   Firestore _firestore=Firestore.instance;
@@ -114,6 +115,12 @@ class _ExploreScreenState extends State<ExploreScreen> {
                               .documents[index]["description"] ;
                           Timestamp dateTime = snapshot.data
                               .documents[index]["timeLost"];
+                          String uid=snapshot.data.documents[index]["uid"];
+
+                          if(dateTime==null){
+                            dateTime= Timestamp.now();
+                          }
+
 
                           return Container(
                             margin: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
@@ -123,7 +130,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                               borderRadius: BorderRadius.circular(20),
                             ),
 
-                            child: getResult=="lost"?obj.lostCard(name,description,itemLost,location,dateTime):obj.foundCard(name,description,itemLost),
+                            child: getResult=="lost"?obj.lostCard(name,description,itemLost,location,dateTime,uid):obj.foundCard(name,description,itemLost,uid),
                           );
                         },
                       ),

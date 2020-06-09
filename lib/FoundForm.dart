@@ -44,6 +44,7 @@ class _FoundFormState extends State<FoundForm> {
       "description":descriptionController.text,
       "email": _user.email,
       "uid":_id,
+      "itemlost":itemController.text,
     });
   }
 
@@ -462,7 +463,10 @@ class _FoundFormState extends State<FoundForm> {
                             Scaffold.of(context).showSnackBar(SnackBar(content: Text("Your response is submitted.",style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w400,
-                            ),),));
+                            ),
+                            ),
+                            )
+                            );
                             image1uploaded=false;
                             image2uploaded=false;
                           });}

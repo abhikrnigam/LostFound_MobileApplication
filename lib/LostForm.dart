@@ -599,7 +599,6 @@ class _LostFormState extends State<LostForm> {
                 // ignore: missing_return
                 onPressed: (){
                     if(controller1.text.toString()=="" || controller2.text.toString()=="" || controller3.text.toString()=="" || controller4.text.toString()==""){
-
                       return Alert(
                           context: context,
                           title: "Incomplete Information",
