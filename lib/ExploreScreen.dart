@@ -17,9 +17,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
   LostFoundCards obj=new LostFoundCards();
   String getResult="lost";
   Firestore _firestore=Firestore.instance;
-  Color lostButtonColor=Colors.black;
+  Color lostButtonColor=Colors.white;
   Color foundButtonColor=Colors.black;
-  Color lostButtonText=Colors.white;
+  Color lostButtonText=Colors.black;
   Color foundButtonText=Colors.white;
   @override
   Widget build(BuildContext context) {
