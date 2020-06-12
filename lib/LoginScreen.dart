@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lostfound/MainScreen.dart';
 import 'package:lostfound/RegisterScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -18,6 +19,10 @@ class _LoginScreenState extends State<LoginScreen> {
   FirebaseAuth _auth=FirebaseAuth.instance;
   String _error;
 
+  void setPrefs() async{
+    SharedPreferences preferences=await SharedPreferences.getInstance();
+    preferences.setBool("isLoggedIn", true);
+  }
 
   Widget buildError(){
     if(_error==null){
@@ -155,6 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                          Navigator.push(context, MaterialPageRoute(builder: (context)=>MainScreen()));
                          emailController.clear();
                          passwordController.clear();
+                         setPrefs();
                        }
 
                     }

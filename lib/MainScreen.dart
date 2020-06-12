@@ -1,12 +1,25 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:lostfound/LostForm.dart';
 import 'package:lostfound/FoundForm.dart';
 import 'package:lostfound/ExploreScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
 class MainScreen extends StatelessWidget {
+
+  FirebaseAuth auth=FirebaseAuth.instance;
+  void logout() async
+  {
+    SharedPreferences prefs=await SharedPreferences.getInstance();
+    prefs.setBool("isLoggedIn", false);
+  }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -127,6 +140,30 @@ class MainScreen extends StatelessWidget {
               ),
 
               Spacer(flex: 3,),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Padding(
+                  padding: const EdgeInsets.only(top:25.0,left: 25,bottom: 10,right: 25),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      children: <Widget>[
+                        IconButton(
+                          icon: Icon(Icons.exit_to_app),
+                          iconSize: 40,
+                          color: Colors.white,
+                          onPressed: (){
+                            auth.signOut();
+                            logout();
+                            Navigator.pop(context);
+                          },
+                        ),
+                        Text("Sign Out",style: GoogleFonts.poppins(color: Colors.white,fontSize: 15),)
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
