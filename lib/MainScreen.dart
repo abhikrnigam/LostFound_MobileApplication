@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:lostfound/LoginScreen.dart';
 import 'package:lostfound/LostForm.dart';
 import 'package:lostfound/FoundForm.dart';
 import 'package:lostfound/ExploreScreen.dart';
@@ -155,7 +156,7 @@ class MainScreen extends StatelessWidget {
                           onPressed: (){
                             auth.signOut();
                             logout();
-                            Navigator.pop(context);
+                            Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>LoginScreen()));
                           },
                         ),
                         Text("Sign Out",style: GoogleFonts.poppins(color: Colors.white,fontSize: 15),)

@@ -15,30 +15,21 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool loggedIn;
 
-  void getprefs() async{
+
+  Future<bool> getprefs() async{
     SharedPreferences preferences=await SharedPreferences.getInstance();
-    loggedIn=preferences.getBool("isLoggedIn");
+    bool loggedIn=preferences.getBool("isLoggedIn");
+    return loggedIn;
   }
 
 
-   Widget getWidget(){
-    if(loggedIn==null){
-      return LoginScreen();
-    }
-    else if(loggedIn){
-     return MainScreen();
-    }
-    else{
-      return LoginScreen();
-    }
-  }
+
 @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getprefs();
+
   }
   @override
   Widget build(BuildContext context) {
@@ -47,7 +38,23 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData.dark().copyWith(
               accentColorBrightness: Brightness.dark,
       ),
-      home: getWidget(),
+      home: FutureBuilder(
+        future: getprefs(),
+        // ignore: missing_return
+        builder: (context,snapshot){
+          if(!snapshot.hasData){
+            return CircularProgressIndicator();
+          }
+          else if(snapshot.data==true){
+            return MainScreen();
+//            Navigator.push(context, MaterialPageRoute(builder: (context)=>MainScreen()));
+          }
+          else{
+            return LoginScreen();
+//            Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+          }
+        },
+      ),
     );
 
   }
