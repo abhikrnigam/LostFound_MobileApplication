@@ -5,7 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'LostFoundCards.dart';
-
+import 'ProfileScreen.dart';
 
 class ExploreScreen extends StatefulWidget {
   @override
@@ -91,7 +91,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
               Spacer(),
               StreamBuilder<QuerySnapshot>(
                 stream: _firestore.collection("$getResult").snapshots(),
-                builder:(context,snapshot) {
+                builder:(context,snapshot){
                   if(!snapshot.hasData){
                     return Center(
                       child: CircularProgressIndicator(backgroundColor: Colors.white,),
@@ -99,6 +99,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   }
                   else{
                     return Container(
+                      width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height*0.75,
                       child: ListView.builder(
                         itemCount: snapshot.data.documents.length,
@@ -117,20 +118,24 @@ class _ExploreScreenState extends State<ExploreScreen> {
                               .documents[index]["timeLost"];
                           String uid=snapshot.data.documents[index]["uid"];
 
-                          if(dateTime==null){
+                          if(dateTime==null)
+                          {
                             dateTime= Timestamp.now();
                           }
+                          return RawMaterialButton(
+                            onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfileScreen(uid: uid,collection: getResult,)));
+                            },
+                            child: Container(
+                              margin: EdgeInsets.symmetric(horizontal: 5,vertical: 5),
+                              width: MediaQuery.of(context).size.width*0.75,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
 
-
-                          return Container(
-                            margin: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-                            width: MediaQuery.of(context).size.width*0.75,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
+                              child: getResult=="lost"?obj.lostCard(name,description,itemLost,location,dateTime,uid):obj.foundCard(name,description,itemLost,uid),
                             ),
-
-                            child: getResult=="lost"?obj.lostCard(name,description,itemLost,location,dateTime,uid):obj.foundCard(name,description,itemLost,uid),
                           );
                         },
                       ),
