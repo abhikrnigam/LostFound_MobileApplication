@@ -1,17 +1,22 @@
+import 'dart:io';
+import 'ChatScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 class ProfileScreen extends StatefulWidget {
   String uid,collection;
-  ProfileScreen({this.uid,this.collection});
+  String email;
+  ProfileScreen({this.uid,this.collection,this.email});
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  String currentUserName;
+  String publisher;
   Firestore _firestore=Firestore.instance;
-
+  String userEmail;
   String uid;
   String collection;
   Future<FirebaseUser> getCurrentUser()async{
@@ -21,12 +26,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
 
+  void setUserData() async{
+    FirebaseAuth _auth=FirebaseAuth.instance;
+    FirebaseUser currentUser=await _auth.currentUser();
+     currentUserName=currentUser.email.toString();
+     publisher=userEmail;
+
+   List<String> combinedName=[currentUserName,publisher];
+   combinedName.sort();
+
+
+
+    await _firestore.collection("chatroom").document("${combinedName[0]}${combinedName[1]}").collection("chats").document().setData({
+      "sender":null,
+      "receiver":null,
+      "text":null,
+      "time":null,
+    });
+  }
 
   void getUserData()
   {
     uid=widget.uid;
     collection=widget.collection;
-
+    userEmail=widget.email;
   }
 
 
@@ -38,6 +61,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
     getUserData();
   }
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,7 +132,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
+                               // borderRadius: BorderRadius.circular(20),
                                 color: Colors.grey[900],
                               ),
                               child: RawMaterialButton(
@@ -115,7 +143,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     fontSize: 20
                                   ),),
                                 ),
-                                onPressed: (){},
+                                onPressed: (){
+                                  setUserData();
+                                  Navigator.push(context,MaterialPageRoute(builder: (context)=>ChatScreen(currentUser: currentUserName,publisher: publisher,)));
+                                },
                                 fillColor: Colors.grey[900],
                               ),
 

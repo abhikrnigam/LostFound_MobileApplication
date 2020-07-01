@@ -99,13 +99,14 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   }
                   else{
                     return Container(
-                      width: MediaQuery.of(context).size.width,
+                      width: double.infinity,
                       height: MediaQuery.of(context).size.height*0.75,
                       child: ListView.builder(
                         itemCount: snapshot.data.documents.length,
                         itemBuilder: (context,index){
 
-
+                          String email = snapshot.data
+                              .documents[index]["email"];
                           String name = snapshot.data
                               .documents[index]["name"];
                           String itemLost = snapshot.data
@@ -124,7 +125,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           }
                           return RawMaterialButton(
                             onPressed: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfileScreen(uid: uid,collection: getResult,)));
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfileScreen(uid: uid,collection: getResult,email: email,)));
                             },
                             child: Container(
                               margin: EdgeInsets.symmetric(horizontal: 5,vertical: 5),
