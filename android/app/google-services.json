@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1028376173164",
+    "firebase_url": "https://lostfound-65e20.firebaseio.com",
+    "project_id": "lostfound-65e20",
+    "storage_bucket": "lostfound-65e20.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1028376173164:android:c04d2950984341c7179649",
+        "android_client_info": {
+          "package_name": "com.abhishek.lostfound"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1028376173164-pvgdcu3k6odq5imj4upd1q078902uluk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCckP_3MigQSbF1-dcgzHNZAhwr_9FR154"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1028376173164-pvgdcu3k6odq5imj4upd1q078902uluk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1028376173164-m2r5425otm6mt7biq86r1g2seqjg2apm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.abhishek.lostfound"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
