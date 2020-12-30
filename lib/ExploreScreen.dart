@@ -13,6 +13,7 @@ class ExploreScreen extends StatefulWidget {
 }
 
 class _ExploreScreenState extends State<ExploreScreen> {
+  String registeredName;
 
   LostFoundCards obj=new LostFoundCards();
   String getResult="lost";
@@ -21,6 +22,25 @@ class _ExploreScreenState extends State<ExploreScreen> {
   Color foundButtonColor=Colors.black;
   Color lostButtonText=Colors.black;
   Color foundButtonText=Colors.white;
+
+  Future<String> getRegisteredName() async{
+    FirebaseAuth _auth=FirebaseAuth.instance;
+    FirebaseUser currentUser=await _auth.currentUser();
+    String registeredName;
+    StreamBuilder(
+      stream: Firestore.instance.collection("user").document("${currentUser.email.toString()}").snapshots(),
+      // ignore: missing_return
+      builder: (context,snapshot){
+        if(!snapshot.hasData){
+          return Center(child: CircularProgressIndicator(backgroundColor: Colors.white,));
+        }
+        else{
+          registeredName=snapshot.data["name"];
+        }
+      },
+    );
+    return registeredName;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,6 +118,21 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     );
                   }
                   else{
+                    FutureBuilder(
+                      future: getRegisteredName(),
+                      // ignore: missing_return
+                      builder: (context,snapshot){
+                        if(!snapshot.hasData){
+                          return Center(child: Container(
+                            height: 50,
+                              width: 50,
+                              child: CircularProgressIndicator(backgroundColor: Colors.white,)));
+                        }
+                        else{
+                          registeredName=snapshot.data;
+                        }
+                      },
+                    );
                     return Container(
                       width: double.infinity,
                       height: MediaQuery.of(context).size.height*0.75,
@@ -107,8 +142,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
                           String email = snapshot.data
                               .documents[index]["email"];
-                          String name = snapshot.data
-                              .documents[index]["name"];
+                          String name = snapshot.data.documents[index]["name"];
                           String itemLost = snapshot.data
                               .documents[index]["itemlost"];
                           String location = snapshot.data
@@ -125,7 +159,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           }
                           return RawMaterialButton(
                             onPressed: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfileScreen(uid: uid,collection: getResult,email: email,)));
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfileScreen(uid: uid,collection: getResult,email: email,name: name,)));
                             },
                             child: Container(
                               margin: EdgeInsets.symmetric(horizontal: 5,vertical: 5),

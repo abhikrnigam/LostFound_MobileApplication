@@ -20,8 +20,31 @@ class _MyAppState extends State<MyApp> {
   Future<bool> getprefs() async{
     SharedPreferences preferences=await SharedPreferences.getInstance();
     bool loggedIn=preferences.getBool("isLoggedIn");
+    if(loggedIn==null){
+      loggedIn=false;
+    }
     return loggedIn;
   }
+//Widget fuck(){
+//    return FutureBuilder(
+//      future: getprefs(),
+//      builder: (context,snapshot){
+//        if(!snapshot.hasData){
+//          return Container();
+//        }
+//        else{
+//          if(snapshot.data==true){
+//            return QuoteScreen();
+//          }
+//          else{
+//            return OngoingScreen();
+//          }
+//        }
+//      },
+//    );
+//}
+
+
 
 
 

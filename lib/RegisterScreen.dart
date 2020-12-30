@@ -17,11 +17,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String _error;
   TextEditingController emailController=new TextEditingController();
   TextEditingController passwordController=new TextEditingController();
+  TextEditingController nameController=new TextEditingController();
   FirebaseAuth _auth=FirebaseAuth.instance;
   Firestore _firestore=Firestore.instance;
   String email;
   String password;
+  String name;
 
+  void saveUserData() async{
+    FirebaseUser user=await _auth.currentUser();
+   await _firestore.collection("user").document("${user.email.toString()}").setData({
+     name:"${nameController.text.toString()}",
+     email:"${emailController.text.toString()}",
+   });
+  }
 
   Widget buildError(){
     if(_error==null){
@@ -61,7 +70,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
             ),
           ),
-
+          Padding(
+            padding:  EdgeInsets.symmetric(vertical:15.0,horizontal:12.0),
+            child: TextField(
+              controller: nameController,
+              textAlign: TextAlign.center,
+              autofocus: true,
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.white,
+              ),
+              onChanged: (value){
+                name=value;
+              },
+              decoration: InputDecoration(
+                fillColor: Colors.black54,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
+                hintText: 'Enter your name ',
+                hintStyle: TextStyle(
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+          ),
           Padding(
             padding:  EdgeInsets.symmetric(vertical:15.0,horizontal:12.0),
             child: TextField(
@@ -128,7 +162,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               // ignore: missing_return
               onPressed:() async {
                 if (emailController.text.toString() == "" ||
-                    passwordController.text.toString() == "") {
+                    passwordController.text.toString() == "" || nameController.text.toString()=="") {
                   return Alert(
                     title: "Incomplete Information",
                     desc: "Please fill all the fields",

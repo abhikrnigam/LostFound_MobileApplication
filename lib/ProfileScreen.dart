@@ -7,7 +7,8 @@ import 'package:google_fonts/google_fonts.dart';
 class ProfileScreen extends StatefulWidget {
   String uid,collection;
   String email;
-  ProfileScreen({this.uid,this.collection,this.email});
+  String name;
+  ProfileScreen({this.uid,this.collection,this.email,this.name});
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
@@ -43,6 +44,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
       "text":null,
       "time":null,
     });
+  }
+
+
+  void setChatData() async{
+
+    FirebaseAuth _auth=FirebaseAuth.instance;
+    FirebaseUser currentUser=await _auth.currentUser();
+    await _firestore.collection("user").document("${currentUser.email.toString()}").collection("contacts").add({
+      "email":  widget.email.toString(),
+      "name":widget.name.toString(),
+    });
+
   }
 
   void getUserData()
@@ -144,6 +157,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),),
                                 ),
                                 onPressed: (){
+                                  setChatData();
                                   setUserData();
                                   Navigator.push(context,MaterialPageRoute(builder: (context)=>ChatScreen(currentUser: currentUserName,publisher: publisher,)));
                                 },
